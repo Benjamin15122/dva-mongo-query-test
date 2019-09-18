@@ -2,17 +2,17 @@ import request from 'umi-request';
 
 const dataSource = [
   {
-    cashFlow1: 'content1',
-    cashFlow2: 'content1',
-    cashFlow3: 'content1',
+    content1: 'c1',
+    content2: 'c1',
+    content3: 'c1',
   },{
-    cashFlow1: 'content2',
-    cashFlow2: 'content2',
-    cashFlow3: 'content2',
+    content1: 'c2',
+    content2: 'c2',
+    content3: 'c2',
   },{
-    cashFlow1: 'content3',
-    cashFlow2: 'content3',
-    cashFlow3: 'content3',
+    content1: 'c3',
+    content2: 'c3',
+    content3: 'c3',
   },
 ];
 
@@ -20,25 +20,24 @@ export default{
     namespace: 'table',
     state:{
         indexData: [],
-        dataSource: dataSource,
+        cost: null,
     },
     reducers:{
-        updateColumn(state, payload){
+        updateColumn(state, {payload}){
             const {indexData} = state
-            const {column,map} = payload
-            const newDataSource = indexData
-            newDataSource.forEach((item)=>{
-                item[column] = map[column]
-            })
-            return {
+            const {column,map,cost} = payload
+            let newState = {
                 ...state,
-                dataSource: newDataSource
+                cost: cost
             }
+            newState[column] = map
+            return newState
         },
-        updateIndex(state, payload){
+        updateIndex(_, {payload}){
+            const {newDataIndex,cost} = payload
             return {
-                ...state,
-                indexData: payload
+                indexData: newDataIndex,
+                cost: cost
             }
         },
     },
@@ -49,6 +48,7 @@ export default{
         *insertData({payload},{call,put}){
             const {length} = payload
             let i = 0
+            const d1 = new Date()
             for(i=0;i<length;i++){
                 const timestamp = new Date().getTime()
                 const content1 = yield call(request.post,'/content1/api/cashFlows/new',{
@@ -71,12 +71,26 @@ export default{
                     })
                 })
             }
+            const d2 = new Date()
+            const cost = parseFloat(d2-d1)
             const response = yield call(request.get,'/contract/api/contract/contracts')
-            yield put({type: 'updateIndex', payload: response.map((item)=>item.content)})
+            const newDataIndex = response.map((item)=>item.content)
+            yield put({type: 'updateIndex', payload: {newDataIndex,cost}})
         },
-        *fetchColum({payload},{call,put}){
-            const {column} = payload
-            
+        *fetchColumn({payload},{call,put}){
+            const {column,list} = payload
+            const d1 = new Date()
+            const response = yield call(request.post,'/content2/api/cashFlows',{
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(list)
+            })
+            const d2 = new Date()
+            const cost = parseFloat(d2-d1)
+            yield put({type: 'updateColumn', payload:{
+                column: column,
+                map: response,
+                cost
+            }})
         }
     }
 }
