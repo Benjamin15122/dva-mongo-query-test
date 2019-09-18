@@ -82,6 +82,36 @@ export default {
   },
   devtool: isAntDesignProPreview ? 'source-map' : false,
   // umi routes: https://umijs.org/zh/guide/router.html
+  proxy: {
+    '/content1/': {
+      target: 'http://192.168.10.130:8089/',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/content1': '',
+      },
+    },
+    '/content2/': {
+      target: 'http://192.168.10.130:8090/',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/content2': '',
+      },
+    },
+    '/content3/': {
+      target: 'http://192.168.10.130:8091/',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/content3': '',
+      },
+    },
+    '/contract/': {
+      target: 'http://192.168.10.130:8000/',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/contract': '',
+      },
+    },
+  },
   routes: [
     {
       path: '/user',
@@ -111,7 +141,7 @@ export default {
               path: '/welcome',
               name: 'welcome',
               icon: 'smile',
-              component: './Welcome',
+              component: './welcome/index',
             },
             {
               component: './404',
