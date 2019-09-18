@@ -84,28 +84,28 @@ export default {
   // umi routes: https://umijs.org/zh/guide/router.html
   proxy: {
     '/content1/': {
-      target: 'http://192.168.31.184:8089/',
+      target: 'http://localhost:5001/',
       changeOrigin: true,
       pathRewrite: {
         '^/content1': '',
       },
     },
     '/content2/': {
-      target: 'http://192.168.31.184:8090/',
+      target: 'http://localhost:5002/',
       changeOrigin: true,
       pathRewrite: {
         '^/content2': '',
       },
     },
     '/content3/': {
-      target: 'http://192.168.31.184:8091/',
+      target: 'http://localhost:5003/',
       changeOrigin: true,
       pathRewrite: {
         '^/content3': '',
       },
     },
     '/contract/': {
-      target: 'http://192.168.31.184:8000/',
+      target: 'http://localhost:5000/',
       changeOrigin: true,
       pathRewrite: {
         '^/contract': '',
