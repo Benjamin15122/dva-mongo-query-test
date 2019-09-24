@@ -145,10 +145,15 @@ export default {
               redirect: '/welcome',
             },
             {
-              path: '/calculator',
-              name: 'calculator',
+              path: '/scheduleList',
+              name: 'rent',
               icon: 'calculator',
-              component: './rent/index'
+              component: './rent/RentList'
+            },
+            {
+              path: '/schedule',
+              component: './rent/RentPage',
+              hideInMenu: true
             },
             {
               path: '/welcome',

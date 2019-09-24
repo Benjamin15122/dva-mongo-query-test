@@ -1,6 +1,7 @@
 export default {
   'menu.welcome': '欢迎',
-  'menu.calculator': '计算器',
+  'menu.rent': '租金表',
+  'menu.schedule': '租金计划',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',
   'menu.login': '登录',
