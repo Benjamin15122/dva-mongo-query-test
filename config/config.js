@@ -83,6 +83,13 @@ export default {
   devtool: isAntDesignProPreview ? 'source-map' : false,
   // umi routes: https://umijs.org/zh/guide/router.html
   proxy: {
+    '/rent/':{
+      target: 'http://192.168.31.184:5003/',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/rent': '',
+      }
+    },
     '/content1/': {
       target: 'http://localhost:5001/',
       changeOrigin: true,
@@ -136,6 +143,12 @@ export default {
             {
               path: '/',
               redirect: '/welcome',
+            },
+            {
+              path: '/calculator',
+              name: 'calculator',
+              icon: 'calculator',
+              component: './rent/index'
             },
             {
               path: '/welcome',
